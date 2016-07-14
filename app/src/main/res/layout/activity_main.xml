@@ -56,13 +56,5 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_for_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
-
 
 </RelativeLayout>
