@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     // https://github.com/JakeWharton/RxBinding
     // http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/
 
-
+    // unscribe concerns
+    // http://www.philosophicalhacker.com/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
