@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
             @Override
             public String call(Void aVoid) {
-                return userText.getText().toString();
+                return userText.getText().toString(); // Return string
             }
         });
 
