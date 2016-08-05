@@ -13,7 +13,7 @@
   1. *Create an observable by binding the button to the RxJava*  
     + Create a reference to the button "Send" from the xml file
     ```java
-    Button sendMsgBtn = (Button) findViewById(R.id.sendUserMessage);
+    Button sendMsgBtn = (Button) findViewById(R.id.sendBtn);
     ```
     + Bind the sendMsBtn (a button) to the RxJava using RxBinding library
     ```java
@@ -54,8 +54,8 @@
         }
     });
     ```
-  3. Use the operator filter() to emit item only if text exists
-    + The filter() operator checks if the item of type String emitted by Observable<String> observableAfterMap is not empty. If it is empty, there is no item is emitted. If the result is a true Boolean from the condition inside the filter() operator, the item is emitted, otherwise no item is emitted :
+  3. *Use the operator filter() to emit item only if text exists*
+    + The filter() operator checks if the item of type String emitted by Observable<String> observableAfterMap is not empty. If it is empty, there is no item is emitted. Therefore, if the result is a true Boolean from the condition inside the filter() operator, the item is emitted, otherwise no item is emitted :
     ```java
     // Emit item if message
 observableAfterMap.filter(new Func1<String, Boolean>() {
@@ -76,6 +76,114 @@ observableAfterMap.filter(new Func1<String, Boolean>() {
        }
    });
 ```
-  4. Get Subscription  by registering subscriber to observable     
-  5. Unscribe subscriber from observable
+  4. *Register the subscriber to the observable and get a Subscription object*
+    + For this case, the subscriber is blablbla
+    + Register the subscriber to the observable observableAfterFilter to receive filtered-emitted item of type String.
+    ```java
+    observableAfterFilter.subscribe(new Action1<String>() {
+
+                @Override
+                public void call(String emittedMessage) {
+
+                }
+            });
+ ```
+    + After subscribing to the observable, a Subscription object is returned:
+ ```java
+   Subscription subscription = observableAfterFilter.subscribe(new   Action1<String>() {
+
+            @Override
+            public void call(String emittedMessage) {
+            }
+        });
+```
+    + When emitted item is received, the callback method call(String message){} is evoked to handle the item. To handle the emitted item, create a Message object using the item and add it to the list in the adpter to be displayed in the RecycleView:
+      ```java
+Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
+
+            @Override
+            public void call(String emittedMessage) {
+
+                Message newMessage = new Message(emittedMessage);
+
+                adapter.addMessageInList(newMessage);
+
+                //Clear editText
+                userText.setText("");
+
+            }
+        });
+     ```    
+  5. *Unregister subscriber from observable*
+    + Unregister subscriber from Observable in the life cycle of the Activity to release resource. Because the subscriber is registered in method onCreate(), the subscriber is unregistered in method onDestroy():   
+    ```java
+    @Override
+   protected void onDestroy() {
+       super.onDestroy();
+       
+       subscription.unsubscribe();
+   }
+      ```
+  6. *Put all code together (Not clean code)*
+  ```java
+  // Get observable
+  Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
+  // Map operator
+  Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
+    @Override
+    public String call(Void aVoid) {
+        return userText.getText().toString(); // Return string
+    }
+});
+// Filter operator
+Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
+    @Override
+    public Boolean call(String s) {
+        return !TextUtils.isEmpty(s);
+    }
+});
+// Subscribing
+Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
+
+    @Override
+    public void call(String emittedMessage) {
+
+        Message newMessage = new Message(emittedMessage);
+
+        adapter.addMessageInList(newMessage);
+
+        //Clear editText
+        userText.setText("");
+
+      }
+});
+  ```
+  7. *The beauty of RxJava: Clean and expressive code by chaining all functionality together*
+  ```java
+  Subscription subscription = RxView.clicks(sendMsgBtn).map(new Func1<Void, String>() {
+      @Override
+      public String call(Void aVoid) {
+          return userText.getText().toString();
+        }
+  }).filter(new Func1<String, Boolean>() {
+      @Override
+      public Boolean call(String s) {
+          return !TextUtils.isEmpty(s);
+        }
+  }).subscribe(new Action1<String>() {
+
+      @Override
+      public void call(String emittedMessage) {
+
+          Message newMessage = new Message(emittedMessage);
+
+          adapter.addMessageInList(newMessage);
+
+          //Clear editText
+          userText.setText("");
+        }
+  });
+ ```
+
+
 ![Scheme](image/displayMessage.png)   
