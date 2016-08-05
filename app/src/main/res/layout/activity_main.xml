@@ -40,10 +40,10 @@
             android:textSize="14sp"
             android:hint="Type your message"
             android:gravity="top"
-            android:layout_toStartOf="@+id/sendUserMessage"
+            android:layout_toStartOf="@+id/sendBtn"
             />
         <Button
-            android:id="@+id/sendUserMessage"
+            android:id="@+id/sendBtn"
             android:layout_marginRight="10dp"
             android:textColor="#FFFFFF"
             android:layout_width="72dp"
