@@ -84,7 +84,7 @@
                 });
         ```
       + After filtering, the *map()* operator returns an observable of type *String* which emits item only if the result from the condition is true:  
-        ```java
+      ```java
             // An observable of type String after applying filter() operator to observableAfterMap
            Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
                @Override
@@ -107,12 +107,11 @@
       + Register the subscriber to the observable *observableAfterFilter* to receive filtered-emitted item of type *String*.
       ```java
           observableAfterFilter.subscribe(new Action1<String>() {
-
                       @Override
                       public void call(String emittedMessage) {
 
                       }
-                  });
+                    });
        ```
       + After subscribing to the observable, a *Subscription* object is returned:
       ```java
@@ -122,7 +121,7 @@
                 public void call(String emittedMessage) {
                 }
             });
-            ```
+      ```
       + When emitted item is received, the callback method *call(String message){}* is evoked to handle the item. To handle the emitted item, create a *Message* object using the item and add it to the list in the adapter to be displayed in the *RecycleView*:
       ```java
   Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
