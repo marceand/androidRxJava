@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText userText = (EditText) findViewById(R.id.chat_user_message);
 
 
-
+        // No chaining operators and subscriber
 //        // T - the type of the items emitted by the Observable
 //        // R - the result type
 //
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Unregister subscriber
         subscription.unsubscribe();
     }
 
