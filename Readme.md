@@ -146,10 +146,9 @@ Subscription subscription = observableAfterFilter.subscribe(new Action1<String>(
           @Override
          protected void onDestroy() {
              super.onDestroy();
-
              subscription.unsubscribe();
          }
-        ```
+      ```
   6. *Put all code together (Not clean code)*
       ```java
       // Get observable
