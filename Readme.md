@@ -15,55 +15,55 @@
 1. *Create an observable by binding the button to the RxJava*  
   + Create a reference to the button *Send* from the xml file
   ```java
-      Button sendMsgBtn = (Button) findViewById(R.id.sendBtn);
-      ```
-      + Bind the *sendMsBtn* (a button) to the RxJava using RxBinding library
-      ```java
+  Button sendMsgBtn = (Button) findViewById(R.id.sendBtn);
+  ```
+  + Bind the *sendMsBtn* (a button) to the RxJava using RxBinding library
+  ```java
       RxView.clicks(sendMsgBtn)
   ```
   + By binding, a source observable is created. This observable emits an item every time button *sendMsgBtn* is clicked.
   ```java
-      Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
-      ```
+  Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
+  ```
 
-      + The type of the item emitted by the observable is of type Void, that's why we have observable *clickObservable* of type *Void*:
-      ```java
-      Observable<Void> clickObservable
+  + The type of the item emitted by the observable is of type Void, that's why we have observable *clickObservable* of type *Void*:
+  ```java
+  Observable<Void> clickObservable
   ```
 2. *Use the operator map() to get the text from the EditText*      
-      + the *map()* operator transforms the emitted item into another. The parameter for *map()* is a generic anonymous class *Func1<T, R>* whose callback method *R call(T receiveData)* is invoked to transform the emitted item into another. T - the type of the items emitted by the Observable. R - the result type returned.
-      ```java
-      map(new Func1<T, R>() {
-                @Override
-                public R call(T receiveData) {
-                    return R Type;
-                }
-            })
-      ```
-      + For this case, the item of type *Void* emitted by source observable *Observable<Void> clickObservable* will be transformed into *String* type. Because the text comes from the EditText, the emitted item of type *Void* is not used, instead the *map()* operator gets the text from the EditText and returns it as *String* type.
-      ```java
-      // Get reference to the EditText used by the user to enter message
-      final EditText userText = (EditText) findViewById(R.id.chat_user_message);
-      ```
-      ```java
-      // Apply map() operator to emitted item
-      clickObservable.map(new Func1<Void, String>() {
-              @Override
-              public String call(Void aVoid) {
-                  return userText.getText().toString(); // Get text from EditText and return it as string
-              }
-          });
-      ```
-      + After transformation, the *map()* operator returns an observable that emits item of type *String*:  
-      ```java
-        // An observable of type String after applying map() operator to clickObservable
-        Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
-            @Override
-            public String call(Void aVoid) {
-                return userText.getText().toString(); // Return string
-            }
-        });
-      ```
+  + the *map()* operator transforms the emitted item into another. The parameter for *map()* is a generic anonymous class *Func1<T, R>* whose callback method *R call(T receiveData)* is invoked to transform the emitted item into another. T - the type of the items emitted by the Observable. R - the result type returned.
+  ```java
+    map(new Func1<T, R>() {
+          @Override
+          public R call(T receiveData) {
+              return R Type;
+          }
+    })
+  ```
+  + For this case, the item of type *Void* emitted by source observable *Observable<Void> clickObservable* will be transformed into *String* type. Because the text comes from the EditText, the emitted item of type *Void* is not used, instead the *map()* operator gets the text from the EditText and returns it as *String* type.
+  ```java
+  // Get reference to the EditText used by the user to enter message
+  final EditText userText = (EditText) findViewById(R.id.chat_user_message);
+  ```
+  ```java
+  // Apply map() operator to emitted item
+  clickObservable.map(new Func1<Void, String>() {
+          @Override
+          public String call(Void aVoid) {
+              return userText.getText().toString(); // Get text from EditText and return it as string
+          }
+      });
+    ```
+  + After transformation, the *map()* operator returns an observable that emits item of type *String*:  
+  ```java
+    // An observable of type String after applying map() operator to clickObservable
+    Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
+        @Override
+        public String call(Void aVoid) {
+            return userText.getText().toString(); // Return string
+        }
+    });
+  ```
 3. *Use the operator filter() to emit item only if text exists*
       + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.  
       ```java
