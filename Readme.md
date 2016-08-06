@@ -52,7 +52,7 @@
               }
           });
       ```
-      + After transformation, the *map()* operator returns an observable that emits item of type String:  
+      + After transformation, the *map()* operator returns an observable that emits item of type *String*:  
       ```java
         // An observable of type String after applying map() operator to clickObservable
         Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
@@ -64,7 +64,7 @@
       ```
     3. *Use the operator filter() to emit item only if text exists*
       + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.  
-        ```java
+      ```java
           filter(new Func1<T, Boolean>() {
                     @Override
                     public Boolean call(T receiveData) {
@@ -73,7 +73,7 @@
                 })
         ```
       + The *filter()* operator checks if the item of type String emitted by *Observable<String> observableAfterMap* is not empty. If it is empty, there is no item is emitted. Therefore, if the result is a true Boolean from the condition inside the *filter()* operator, the item is emitted, otherwise no item is emitted :  
-        ```java
+      ```java
             // Emit item if message
         observableAfterMap.filter(new Func1<String, Boolean>() {
                     @Override
@@ -84,7 +84,7 @@
                 });
         ```
       + After filtering, the *map()* operator returns an observable of type *String* which emits item only if the result from the condition is true:  
-         ```java
+        ```java
             // An observable of type String after applying filter() operator to observableAfterMap
            Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
                @Override
@@ -95,7 +95,7 @@
          ```
     4. *Register the subscriber to the observable and get a Subscription object*
       + For this case, the subscriber is a generic anonymous class *Action1<T>() {}* whose callback method *call(T emittedMessage)* is invoked when an emitted item is received:
-          ```java
+      ```java
         new Action1<T>() {
 
                       @Override
@@ -105,7 +105,7 @@
                   }
        ```
       + Register the subscriber to the observable *observableAfterFilter* to receive filtered-emitted item of type *String*.
-          ```java
+      ```java
           observableAfterFilter.subscribe(new Action1<String>() {
 
                       @Override
@@ -115,7 +115,7 @@
                   });
        ```
       + After subscribing to the observable, a *Subscription* object is returned:
-          ```java
+      ```java
        Subscription subscription = observableAfterFilter.subscribe(new   Action1<String>() {
 
                 @Override
@@ -124,7 +124,7 @@
             });
             ```
       + When emitted item is received, the callback method *call(String message){}* is evoked to handle the item. To handle the emitted item, create a *Message* object using the item and add it to the list in the adapter to be displayed in the *RecycleView*:
-        ```java
+      ```java
   Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
 
               @Override
@@ -142,7 +142,7 @@
        ```    
     5. *Unregister subscriber from observable*
       + Unregister subscriber from Observable in the life cycle of the *Activity* to release resource. Because the subscriber is registered in method *onCreate()*, the subscriber is unregistered in method *onDestroy()*:     
-        ```java
+      ```java
             @Override
            protected void onDestroy() {
                super.onDestroy();
