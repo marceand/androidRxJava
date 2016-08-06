@@ -53,7 +53,7 @@
           });
       ```
       + After transformation, the *map()* operator returns an observable that emits item of type String:  
-        ```java
+      ```java
         // An observable of type String after applying map() operator to clickObservable
         Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
             @Override
