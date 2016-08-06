@@ -63,7 +63,7 @@
         });
       ```
   3. *Use the operator filter() to emit item only if text exists*
-    + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.
+    + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.  
       ```java
         filter(new Func1<T, Boolean>() {
                   @Override
@@ -71,8 +71,8 @@
                       return BooleanType;
                   }
               })
-            ```
-    + The *filter()* operator checks if the item of type String emitted by *Observable<String> observableAfterMap* is not empty. If it is empty, there is no item is emitted. Therefore, if the result is a true Boolean from the condition inside the *filter()* operator, the item is emitted, otherwise no item is emitted :
+      ```
+    + The *filter()* operator checks if the item of type String emitted by *Observable<String> observableAfterMap* is not empty. If it is empty, there is no item is emitted. Therefore, if the result is a true Boolean from the condition inside the *filter()* operator, the item is emitted, otherwise no item is emitted :  
       ```java
           // Emit item if message
       observableAfterMap.filter(new Func1<String, Boolean>() {
@@ -82,8 +82,8 @@
                       return !TextUtils.isEmpty(s);
                   }
               });
-          ```
-    + After filtering, the *map()* operator returns an observable of type *String* which emits item only if the result from the condition is true:
+      ```
+    + After filtering, the *map()* operator returns an observable of type *String* which emits item only if the result from the condition is true:  
        ```java
           // An observable of type String after applying filter() operator to observableAfterMap
          Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
@@ -141,14 +141,14 @@ Subscription subscription = observableAfterFilter.subscribe(new Action1<String>(
         });
      ```    
   5. *Unregister subscriber from observable*
-    + Unregister subscriber from Observable in the life cycle of the *Activity* to release resource. Because the subscriber is registered in method *onCreate()*, the subscriber is unregistered in method *onDestroy()*:   
+    + Unregister subscriber from Observable in the life cycle of the *Activity* to release resource. Because the subscriber is registered in method *onCreate()*, the subscriber is unregistered in method *onDestroy()*:     
       ```java
-      @Override
-     protected void onDestroy() {
-         super.onDestroy();
+          @Override
+         protected void onDestroy() {
+             super.onDestroy();
 
-         subscription.unsubscribe();
-     }
+             subscription.unsubscribe();
+         }
         ```
   6. *Put all code together (Not clean code)*
       ```java
