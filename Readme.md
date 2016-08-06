@@ -1,11 +1,13 @@
-**My ways to understand rxJava for Android**   
+**My ways to understand rxJava for Android**  
+
 1. **Undertand the concept**   
-  a. General concept- in rxJava,      
-  b. Observable - the object that emits data.  
-  c. Susbcriber - The object receives the data emitted by the Observable  
-  d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
-  e. Subscription- this object is obtained when a subscriber registers to the observable. It lets us to unregister the subscriber from the observable.  
-  e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).     
+    a. General concept- in rxJava,      
+    b. Observable - the object that emits data.  
+    c. Susbcriber - The object receives the data emitted by the Observable  
+    d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
+    e. Subscription- this object is obtained when a subscriber registers to the observable. It lets us to unregister the subscriber from the observable.  
+    e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).
+
 2. **Implement a step-by-step example**  
 **Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
 **RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
@@ -53,14 +55,14 @@
     ```
     + After transformation, the *map()* operator returns an observable that emits item of type *String*:
         ```java
-    // An observable of type String after applying map() operator to clickObservable
-    Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
-        @Override
-        public String call(Void aVoid) {
-            return userText.getText().toString(); // Return string
-        }
-    });
-    ```
+      // An observable of type String after applying map() operator to clickObservable
+      Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
+          @Override
+          public String call(Void aVoid) {
+              return userText.getText().toString(); // Return string
+          }
+      });
+      ```
   3. *Use the operator filter() to emit item only if text exists*
     + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.
     ```java
@@ -72,26 +74,26 @@
           })
     ```
     + The *filter()* operator checks if the item of type String emitted by *Observable<String> observableAfterMap* is not empty. If it is empty, there is no item is emitted. Therefore, if the result is a true Boolean from the condition inside the *filter()* operator, the item is emitted, otherwise no item is emitted :
-    ```java
-    // Emit item if message
-observableAfterMap.filter(new Func1<String, Boolean>() {
-            @Override
-            public Boolean call(String s) {
-              // Check the message is not empty
-                return !TextUtils.isEmpty(s);
-            }
-        });
-```
+      ```java
+      // Emit item if message
+  observableAfterMap.filter(new Func1<String, Boolean>() {
+              @Override
+              public Boolean call(String s) {
+                // Check the message is not empty
+                  return !TextUtils.isEmpty(s);
+              }
+          });
+          ```
     + After filtering, the *map()* operator returns an observable of type *String* which emits item only if the result from the condition is true:
-   ```java
-   // An observable of type String after applying filter() operator to observableAfterMap
-   Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
-       @Override
-       public Boolean call(String s) {
-           return !TextUtils.isEmpty(s);
-       }
-   });
-```
+       ```java
+       // An observable of type String after applying filter() operator to observableAfterMap
+       Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
+           @Override
+           public Boolean call(String s) {
+               return !TextUtils.isEmpty(s);
+           }
+       });
+       ```
   4. *Register the subscriber to the observable and get a Subscription object*
     + For this case, the subscriber is a generic anonymous class *Action1<T>() {}* whose callback method *call(T emittedMessage)* is invoked when an emitted item is received:
     ```java
