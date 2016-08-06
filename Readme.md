@@ -6,28 +6,30 @@
     c. Susbcriber - The object receives the data emitted by the Observable  
     d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
     e. Subscription- this object is obtained when a subscriber registers to the observable. It lets us to unregister the subscriber from the observable.  
-    e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).
-**Implement a step-by-step example**  
-    **Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
+    e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).  
+
+**Implement a step-by-step example**    
+    **Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.    
     **RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
+
 1. *Create an observable by binding the button to the RxJava*  
-      + Create a reference to the button *Send* from the xml file
-      ```java
+  + Create a reference to the button *Send* from the xml file
+  ```java
       Button sendMsgBtn = (Button) findViewById(R.id.sendBtn);
       ```
       + Bind the *sendMsBtn* (a button) to the RxJava using RxBinding library
       ```java
       RxView.clicks(sendMsgBtn)
-      ```
-      + By binding, a source observable is created. This observable emits an item every time button *sendMsgBtn* is clicked.
-      ```java
+  ```
+  + By binding, a source observable is created. This observable emits an item every time button *sendMsgBtn* is clicked.
+  ```java
       Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
       ```
 
       + The type of the item emitted by the observable is of type Void, that's why we have observable *clickObservable* of type *Void*:
       ```java
       Observable<Void> clickObservable
-      ```
+  ```
 2. *Use the operator map() to get the text from the EditText*      
       + the *map()* operator transforms the emitted item into another. The parameter for *map()* is a generic anonymous class *Func1<T, R>* whose callback method *R call(T receiveData)* is invoked to transform the emitted item into another. T - the type of the items emitted by the Observable. R - the result type returned.
       ```java
