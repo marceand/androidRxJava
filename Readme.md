@@ -95,34 +95,34 @@
        ```
   4. *Register the subscriber to the observable and get a Subscription object*
     + For this case, the subscriber is a generic anonymous class *Action1<T>() {}* whose callback method *call(T emittedMessage)* is invoked when an emitted item is received:
-    ```java
-  new Action1<T>() {
+        ```java
+      new Action1<T>() {
 
-                @Override
-                public void call(T emittedMessage) {
+                    @Override
+                    public void call(T emittedMessage) {
 
+                    }
                 }
-            }
- ```
+     ```
     + Register the subscriber to the observable *observableAfterFilter* to receive filtered-emitted item of type *String*.
-    ```java
-    observableAfterFilter.subscribe(new Action1<String>() {
+        ```java
+        observableAfterFilter.subscribe(new Action1<String>() {
 
-                @Override
-                public void call(String emittedMessage) {
+                    @Override
+                    public void call(String emittedMessage) {
 
-                }
-            });
- ```
+                    }
+                });
+     ```
     + After subscribing to the observable, a *Subscription* object is returned:
- ```java
-   Subscription subscription = observableAfterFilter.subscribe(new   Action1<String>() {
+        ```java
+     Subscription subscription = observableAfterFilter.subscribe(new   Action1<String>() {
 
-            @Override
-            public void call(String emittedMessage) {
-            }
-        });
-```
+              @Override
+              public void call(String emittedMessage) {
+              }
+          });
+          ```
     + When emitted item is received, the callback method *call(String message){}* is evoked to handle the item. To handle the emitted item, create a *Message* object using the item and add it to the list in the adapter to be displayed in the *RecycleView*:
       ```java
 Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
