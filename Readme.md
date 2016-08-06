@@ -6,11 +6,10 @@
     c. Susbcriber - The object receives the data emitted by the Observable  
     d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
     e. Subscription- this object is obtained when a subscriber registers to the observable. It lets us to unregister the subscriber from the observable.  
-    e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).
-
+    e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).  
 2. **Implement a step-by-step example**  
-**Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
-**RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
+  **Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
+  **RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
   1. *Create an observable by binding the button to the RxJava*  
     + Create a reference to the button *Send* from the xml file
     ```java
@@ -143,74 +142,74 @@ Subscription subscription = observableAfterFilter.subscribe(new Action1<String>(
      ```    
   5. *Unregister subscriber from observable*
     + Unregister subscriber from Observable in the life cycle of the *Activity* to release resource. Because the subscriber is registered in method *onCreate()*, the subscriber is unregistered in method *onDestroy()*:   
-    ```java
-    @Override
-   protected void onDestroy() {
-       super.onDestroy();
+      ```java
+      @Override
+     protected void onDestroy() {
+         super.onDestroy();
 
-       subscription.unsubscribe();
-   }
-      ```
+         subscription.unsubscribe();
+     }
+        ```
   6. *Put all code together (Not clean code)*
-  ```java
-  // Get observable
-  Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
-  // Map operator
-  Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
-    @Override
-    public String call(Void aVoid) {
-        return userText.getText().toString(); // Return string
-    }
-});
-// Filter operator
-Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
-    @Override
-    public Boolean call(String s) {
-        return !TextUtils.isEmpty(s);
-    }
-});
-// Subscribing
-Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
+      ```java
+      // Get observable
+      Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
+      // Map operator
+      Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
+        @Override
+        public String call(Void aVoid) {
+            return userText.getText().toString(); // Return string
+        }
+    });
+    // Filter operator
+    Observable<String> observableAfterFilter = observableAfterMap.filter(new Func1<String, Boolean>() {
+        @Override
+        public Boolean call(String s) {
+            return !TextUtils.isEmpty(s);
+        }
+    });
+    // Subscribing
+    Subscription subscription = observableAfterFilter.subscribe(new Action1<String>() {
 
-    @Override
-    public void call(String emittedMessage) {
+        @Override
+        public void call(String emittedMessage) {
 
-        Message newMessage = new Message(emittedMessage);
+            Message newMessage = new Message(emittedMessage);
 
-        adapter.addMessageInList(newMessage);
+            adapter.addMessageInList(newMessage);
 
-        //Clear editText
-        userText.setText("");
+            //Clear editText
+            userText.setText("");
 
-      }
-});
-  ```
+          }
+    });
+      ```
   7. *The beauty of RxJava: Clean and readable code by chaining operators and subscriber together*
-  ```java
-  Subscription subscription = RxView.clicks(sendMsgBtn).map(new Func1<Void, String>() {
-      @Override
-      public String call(Void aVoid) {
-          return userText.getText().toString();
-        }
-  }).filter(new Func1<String, Boolean>() {
-      @Override
-      public Boolean call(String s) {
-          return !TextUtils.isEmpty(s);
-        }
-  }).subscribe(new Action1<String>() {
+    ```java
+    Subscription subscription = RxView.clicks(sendMsgBtn).map(new Func1<Void, String>() {
+        @Override
+        public String call(Void aVoid) {
+            return userText.getText().toString();
+          }
+    }).filter(new Func1<String, Boolean>() {
+        @Override
+        public Boolean call(String s) {
+            return !TextUtils.isEmpty(s);
+          }
+    }).subscribe(new Action1<String>() {
 
-      @Override
-      public void call(String emittedMessage) {
+        @Override
+        public void call(String emittedMessage) {
 
-          Message newMessage = new Message(emittedMessage);
+            Message newMessage = new Message(emittedMessage);
 
-          adapter.addMessageInList(newMessage);
+            adapter.addMessageInList(newMessage);
 
-          //Clear editText
-          userText.setText("");
-        }
-  });
- ```
+            //Clear editText
+            userText.setText("");
+          }
+    });
+   ```
 
 
 ![Scheme](image/displayMessage.png)   
