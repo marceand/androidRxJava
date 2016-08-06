@@ -1,16 +1,16 @@
 **My ways to understand rxJava for Android**  
 
-1. **Undertand the concept**   
+**Undertand the concept**   
     a. General concept- in rxJava,      
     b. Observable - the object that emits data.  
     c. Susbcriber - The object receives the data emitted by the Observable  
     d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
     e. Subscription- this object is obtained when a subscriber registers to the observable. It lets us to unregister the subscriber from the observable.  
     e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).
-2. **Implement a step-by-step example**  
+**Implement a step-by-step example**  
     **Example Description:** Take look at the screenshot below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
     **RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
-    1. *Create an observable by binding the button to the RxJava*  
+1. *Create an observable by binding the button to the RxJava*  
       + Create a reference to the button *Send* from the xml file
       ```java
       Button sendMsgBtn = (Button) findViewById(R.id.sendBtn);
@@ -28,7 +28,7 @@
       ```java
       Observable<Void> clickObservable
       ```
-    2. *Use the operator map() to get the text from the EditText*      
+2. *Use the operator map() to get the text from the EditText*      
       + the *map()* operator transforms the emitted item into another. The parameter for *map()* is a generic anonymous class *Func1<T, R>* whose callback method *R call(T receiveData)* is invoked to transform the emitted item into another. T - the type of the items emitted by the Observable. R - the result type returned.
       ```java
       map(new Func1<T, R>() {
@@ -62,7 +62,7 @@
             }
         });
       ```
-    3. *Use the operator filter() to emit item only if text exists*
+3. *Use the operator filter() to emit item only if text exists*
       + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.  
       ```java
           filter(new Func1<T, Boolean>() {
@@ -93,7 +93,7 @@
                }
            });
          ```
-    4. *Register the subscriber to the observable and get a Subscription object*
+4. *Register the subscriber to the observable and get a Subscription object*
       + For this case, the subscriber is a generic anonymous class *Action1<T>() {}* whose callback method *call(T emittedMessage)* is invoked when an emitted item is received:
       ```java
         new Action1<T>() {
@@ -139,7 +139,7 @@
               }
           });
        ```    
-    5. *Unregister subscriber from observable*
+5. *Unregister subscriber from observable*
       + Unregister subscriber from Observable in the life cycle of the *Activity* to release resource. Because the subscriber is registered in method *onCreate()*, the subscriber is unregistered in method *onDestroy()*:     
       ```java
             @Override
@@ -148,8 +148,8 @@
                subscription.unsubscribe();
            }
         ```
-    6. *Put all code together (Not clean code)*
-        ```java
+6. *Put all code together (Not clean code)*
+    ```java
         // Get observable
         Observable<Void> clickObservable = RxView.clicks(sendMsgBtn);
         // Map operator
@@ -182,8 +182,8 @@
             }
       });
         ```
-    7. *The beauty of RxJava: Clean and readable code by chaining operators and subscriber together*
-      ```java
+7. *The beauty of RxJava: Clean and readable code by chaining operators and subscriber together*
+    ```java
       Subscription subscription = RxView.clicks(sendMsgBtn).map(new Func1<Void, String>() {
           @Override
           public String call(Void aVoid) {
