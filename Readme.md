@@ -54,8 +54,14 @@
       ```
       + After transformation, the *map()* operator returns an observable that emits item of type *String*:  
         ```java
-          //
-        ```
+        // An observable of type String after applying map() operator to clickObservable
+        Observable<String> observableAfterMap = clickObservable.map(new Func1<Void, String>() {
+            @Override
+            public String call(Void aVoid) {
+                return userText.getText().toString(); // Return string
+            }
+        });
+      ```
     3. *Use the operator filter() to emit item only if text exists*
       + the *filter()* operator emits item when the item passes a specify test. The parameter for the *filter()* is a generic anonymous class *Func1<T, Boolean>* whose callback method *Boolean call(T receiveData)* is invoked to test the emitted item. T - the type of the items emitted by the Observable. R - the result type returned.  
         ```java
