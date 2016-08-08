@@ -1,7 +1,7 @@
 **My ways to understand rxJava for Android**  
 
 **Undertand the concept**   
-    a. General concept- in rxJava,      
+    a. General concept- In RxJava, there is an *observable* object that emits data to a *subscriber*. To receives data from the *observable*, the subscriber has to register to the observable. By registering the subscriber to the observable, a *subscription* object is created which is used to *unscribe* the subscriber from the observable. To manipulate data emitted by the observable before reaching the observer, operators (ex: map, fiter,...) are applied to the data. An operator returns an observable for continuing emitting data to the subscriber.   
     b. Observable - the object that emits data.  
     c. Susbcriber - The object receives the data emitted by the Observable  
     d. Operators - Operators are used to manipulate the data emitted by the Observable before  it reaches the subscriber. There are many operators such as map, filter, merge and more.  
@@ -9,10 +9,10 @@
     e. Unscribe - we have to unregister the subscriber from the observable object. It is the best practice to stop the subscriber from receiving emitted item and  release resources (to prevent a possible memory leak).  
 
 **Implement a step-by-step example**    
-**Example Description:** Take look at the gif below. We want to display the text the user enters in the EditText field after clicking the button *Send*.  
+**Example Description:** Take look at the gif below. We want to display the text the user enters in the EditText field after clicking the button *SEND*.  
 ![Scheme](image/rxJavaGif.gif)  
 
-**RxJva step-by-step usage:**  When user clicks the button *Send*, the text is displayed only if the text is not empty. Therefore:  
+**RxJva step-by-step usage:**  When user clicks the button *SEND*, the text is displayed only if the text is not empty. Therefore:  
 
 1. *Create an observable by binding the button to the RxJava*  
   + Create a reference to the button *Send* from the xml file
