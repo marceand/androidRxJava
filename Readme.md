@@ -210,4 +210,11 @@ Subscription subscription = observableAfterFilter.subscribe(new Action1<String>(
             userText.setText("");
           }
     });
-   ```   
+   ```  
+
+**Resources:*  
+http://blog.feedpresso.com/2016/01/25/why-you-should-use-rxjava-in-android-a-short-introduction-to-rxjava.html  
+https://realm.io/news/donn-felker-reactive-android-ui-programming-with-rxbinding/  
+https://github.com/JakeWharton/RxBinding  
+http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/  
+http://www.philosophicalhacker.com/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/  
